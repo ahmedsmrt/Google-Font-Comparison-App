@@ -158,6 +158,7 @@ export default function Form() {
 
   useEffect(() => {
     fetchData();
+    
   }, []);
 
   const handleChange = (index) => {
@@ -174,6 +175,7 @@ export default function Form() {
     tempVarTwo = fontNames;
 
     return tempVarTwo;
+    
   };
 
   return (
@@ -214,9 +216,9 @@ export default function Form() {
             if (!tempVar || !tempVarTwo) {
               alert("Please select a font family for both elements.");
             } else {
-              setFontURL(test[tempVar - 1].files.regular);
+              setFontURL(`https${(test[tempVar - 1].files.regular.slice(4))}`);
               setFontName(test[tempVar - 1].family);
-              setFontURLTwo(test[tempVarTwo - 1].files.regular);
+              setFontURLTwo(`https${(test[tempVarTwo - 1].files.regular.slice(4))}`);
               setFontNameTwo(test[tempVarTwo - 1].family);
               console.log(test[tempVar - 1].family);
               console.log(test[tempVarTwo - 1].family);
