@@ -11,18 +11,14 @@ body {
   height: 100vh;
   width: 100vw;
   font-family: "Red Hat Text", sans-serif ;
+  background-color: #528876;
 }
 
 main {
-  background-color: lightseagreen;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid black;
 }
 
 
-section {
-  border: 1px solid white;
-}

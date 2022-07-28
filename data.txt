@@ -1,0 +1,136 @@
+  const [test, setTest] = useState([]);
+  const [fontName, setFontName] = useState();
+  const [fontURL, setFontURL] = useState();
+  const [fontNameTwo, setFontNameTwo] = useState();
+  const [fontURLTwo, setFontURLTwo] = useState();
+  let tempVar, tempVarTwo;
+  const SectionStyles = styled.section`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @font-face {
+      font-family: ${fontName};
+      src: url(${fontURL});
+    }
+
+    @font-face {
+      font-family: ${fontNameTwo};
+      src: url(${fontURLTwo});
+    }
+
+    p {
+      font-family: ${fontName};
+    }
+
+    h1 {
+      font-family: ${fontNameTwo};
+    }
+  `;
+
+  const fetchData = async () => {
+    const response = await fetch(
+      `https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDKuNkb05g9k0iPDXCnnCDAu5mctac1edY`
+    );
+    const data = await response.json();
+    const items = data.items;
+    setTest(items);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+
+    
+    
+    
+  const handleChange = (index) => {
+    const fontNames = index.target.selectedIndex;
+
+    tempVar = fontNames;
+
+    return tempVar;
+  };
+
+  const handleChangeTwo = (index) => {
+    const fontNames = index.target.selectedIndex;
+
+    tempVarTwo = fontNames;
+
+    return tempVarTwo;
+  };
+    
+    
+    
+    
+    
+    
+    
+    
+    <SectionStyles>
+      <form>
+        <div>
+          <label htmlFor="Header">Header</label>
+          <select onChange={handleChangeTwo} name="" id="testSelect">
+            <option value="Choose">Choose a font</option>
+            {test.map((el, index) => {
+              const fontFamily = el.family;
+              return (
+                <option key={index} value={fontFamily}>
+                  {fontFamily}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="">Paragraph</label>
+          <select onChange={handleChange} name="" id="testSelect">
+            <option value="Choose">Choose a font</option>
+            {test.map((el, index) => {
+              const fontFamily = el.family;
+              return (
+                <option key={index} value={fontFamily}>
+                  {fontFamily}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <button
+            onClick={(el) => {
+              el.preventDefault();
+              if(!tempVar || !tempVarTwo) {
+                alert("Please select a font family")
+              }else {
+                setFontURL(test[tempVar - 1].files.regular);
+              setFontName(test[tempVar - 1].family);
+              setFontURLTwo(test[tempVarTwo - 1].files.regular);
+              setFontNameTwo(test[tempVarTwo - 1].family);
+              console.log(test[tempVar - 1].family);
+              console.log(test[tempVarTwo - 1].family);
+              }
+            }}
+          >
+            Send Request
+          </button>
+      </form>
+      <div className="display-wrapper">
+        <h1>This is how an H1 looks like using {fontNameTwo}</h1>
+        <h3>This is how paragraph text looks like using {fontName} <br/><br/></h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique
+          eaque a quas porro voluptas quisquam neque ea consequuntur illo nihil?
+          Animi necessitatibus magni sequi earum deserunt eos aliquid voluptate
+          dolores?
+        </p>
+      </div>
+    </SectionStyles>

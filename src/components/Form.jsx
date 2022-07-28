@@ -3,20 +3,32 @@ import styled from "styled-components";
 
 export default function Form() {
   const [test, setTest] = useState([]);
-  const [fontName, setFontName] = useState();
+  const [fontName, setFontName] = useState("Red Hat Text");
   const [fontURL, setFontURL] = useState();
-  const [fontNameTwo, setFontNameTwo] = useState();
+  const [fontNameTwo, setFontNameTwo] = useState("Red Hat Text");
   const [fontURLTwo, setFontURLTwo] = useState();
   let tempVar, tempVarTwo;
   const SectionStyles = styled.section`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+    max-width: 800px;
+    margin: 0 20px;
+    flex-wrap: wrap;
 
     form {
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    form > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
     }
 
     @font-face {
@@ -31,11 +43,98 @@ export default function Form() {
 
     p {
       font-family: ${fontName};
+      padding: 10px;
+      color: whitesmoke;
     }
 
     h1 {
       font-family: ${fontNameTwo};
+      padding: 10px;
+      color: whitesmoke;
+
     }
+
+  
+
+    .display-wrapper {
+      display: flex;
+      flex-direction: column;
+      max-width: 50%;
+      padding: 0 20px;
+    }
+    .header-wrap {
+      display: 1;
+    }
+    .paragraph-wrap {
+      display: 1;
+    }
+
+
+    .special_btn {
+    position: relative;
+      margin: 0.5rem 0;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: .85rem;
+    font-weight: 100;
+    background-color: transparent;
+    cursor: pointer;
+    color: #EFECEA;
+    text-decoration: none;
+  }
+  .special_btn::before {
+    content: "";
+    position: absolute;
+    bottom: 15%;
+    left: 8.5%;
+    width: 54%;
+    height: 5%;
+    background-color: #3B1E17;
+    transition: .75s;
+}
+  .special_btn::after {
+    content: "";
+    position: absolute;
+    top: 40%;
+    left: 102%;
+    border-radius: 50%;
+    width: 7px;
+    height: 7px;
+    background-color: #94D4BE;
+    transition: .75s;
+}
+.special_btn:hover::before {
+    left: 67%;
+    width: 26%;
+    background-color: #94D4BE;
+}
+.special_btn:hover::after {
+    top: 50%;
+    left: 5%;
+    border-radius: 0;
+    width: 52%;
+    height: 6%;
+    background-color: #1D3B31;
+}
+
+    select {
+      font-size: 12px;
+      max-width: 125px;
+      border-radius: 10px;
+      margin: 10px;
+      cursor: pointer;
+      outline: none;
+    }
+
+   
+
+    .option {
+      background-color: #1D3B31;
+      color: #EFECEA;
+      cursor: pointer;
+    }
+
   `;
 
   const fetchData = async () => {
@@ -71,13 +170,13 @@ export default function Form() {
     <SectionStyles>
       <form>
         <div>
-          <label htmlFor="">Header</label>
+          <label htmlFor="Header">Header</label>
           <select onChange={handleChangeTwo} name="" id="testSelect">
-            <option value="Choose">Choose an option</option>
+            <option className="option"  value="Choose">Choose a font</option>
             {test.map((el, index) => {
               const fontFamily = el.family;
               return (
-                <option key={index} value={fontFamily}>
+                <option className="option"  key={index} value={fontFamily}>
                   {fontFamily}
                 </option>
               );
@@ -87,11 +186,11 @@ export default function Form() {
         <div>
           <label htmlFor="">Paragraph</label>
           <select onChange={handleChange} name="" id="testSelect">
-            <option value="Choose">Choose an option</option>
+            <option className="option"  value="Choose">Choose a font</option>
             {test.map((el, index) => {
               const fontFamily = el.family;
               return (
-                <option key={index} value={fontFamily}>
+                <option className="option" key={index} value={fontFamily}>
                   {fontFamily}
                 </option>
               );
@@ -99,32 +198,42 @@ export default function Form() {
           </select>
         </div>
         <button
-            onClick={(el) => {
-              el.preventDefault();
-              if(!tempVar || !tempVarTwo) {
-                alert("Please select a font family")
-              }else {
-                setFontURL(test[tempVar - 1].files.regular);
+          className="special_btn"
+          onClick={(el) => {
+            el.preventDefault();
+            if (!tempVar || !tempVarTwo) {
+              alert("Please select a font family for both elements.");
+            } else {
+              setFontURL(test[tempVar - 1].files.regular);
               setFontName(test[tempVar - 1].family);
               setFontURLTwo(test[tempVarTwo - 1].files.regular);
               setFontNameTwo(test[tempVarTwo - 1].family);
               console.log(test[tempVar - 1].family);
               console.log(test[tempVarTwo - 1].family);
-              }
-            }}
-          >
-            Send Request
-          </button>
+            }
+          }}
+        >
+          Preview Text
+        </button>
       </form>
       <div className="display-wrapper">
-        <h1>This is how an H1 looks like using {fontNameTwo}</h1>
-        <p>
-          This is how paragraph text looks like using {fontName} <br/><br/>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique
-          eaque a quas porro voluptas quisquam neque ea consequuntur illo nihil?
-          Animi necessitatibus magni sequi earum deserunt eos aliquid voluptate
-          dolores?
-        </p>
+        <div className="header-wrap">
+          <h4>
+            Font Being Displayed: <u>{fontNameTwo}</u>
+          </h4>
+          <h1>This is an H1</h1>
+        </div>
+        <div className="paragraph-wrap">
+          <h4>
+            Font Being Displayed: <u>{fontName}</u>
+          </h4>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique
+            eaque a quas porro voluptas quisquam neque ea consequuntur illo
+            nihil? Animi necessitatibus magni sequi earum deserunt eos aliquid
+            voluptate dolores?
+          </p>
+        </div>
       </div>
     </SectionStyles>
   );
