@@ -14,7 +14,6 @@ export default function Form() {
     justify-content: center;
     align-items: center;
     max-width: 800px;
-    margin: 0 20px;
     flex-wrap: wrap;
 
     form {
@@ -134,6 +133,17 @@ export default function Form() {
       color: #EFECEA;
       cursor: pointer;
     }
+
+    
+@media (max-width: 768px) {
+    .display-wrapper {
+      margin-top: 30px;
+      max-width: 100vw;
+    }
+   
+  }
+
+
 
   `;
 
